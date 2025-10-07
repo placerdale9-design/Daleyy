@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hi Kitkat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .book {
+      position: relative;
+      width: 320px;
+      height: 420px;
+      perspective: 1200px;
+      margin-bottom: 10px;
+    }
+
+    .book::before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 20px;
+      bottom: 20px;
+      width: 20px;
+      background: linear-gradient(to bottom, #2c3e50, #34495e);
+      border-radius: 10px 0 0 10px;
+      z-index: 0;
+      box-shadow: inset -5px 0 10px rgba(0,0,0,0.2);
+    }
+
+    .cover {
+      position: absolute;
+      left: 10px;
+      width: calc(100% - 10px);
+      height: 100%;
+      background: linear-gradient(145deg, #2c3e50, #3498db);
+      border-radius: 0 15px 15px 0;
+      color: #ecf0f1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform-origin: left center;
+      transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 
+        0 15px 35px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+      z-index: 2;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .cover-title {
+      font-size: 1.6em;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-bottom: 15px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .cover-icons {
+      font-size: 2.2em;
+      margin-top: 5px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    .page {
+      position: absolute;
+      left: 10px;
+      width: calc(100% - 10px);
+      height: 100%;
+      background: linear-gradient(to bottom, #fdfcfb, #f8f4f0);
+      border-radius: 0 15px 15px 0;
+      box-shadow: 
+        inset 0 0 20px rgba(0,0,0,0.05),
+        5px 0 15px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 30px;
+      text-align: left;
+      color: #2c3e50;
+      font-size: 1.15em;
+      line-height: 1.7;
+      z-index: 1;
+      font-weight: 300;
+      overflow: hidden;
+    }
+
+    .book.open .cover {
+      transform: rotateY(-170deg);
+    }
+
+    .book.open .page {
+      animation: pageReveal 0.8s ease-out 0.4s forwards;
+      opacity: 0;
+    }
+
+    @keyframes pageReveal {
+      to {
+        opacity: 1;
+        transform: translateX(5px) rotateY(5deg);
+      }
+    }
+
+    .btn {
+      background: linear-gradient(145deg, #3498db, #2980b9);
+      color: #ecf0f1;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(52, 152, 219, 0.4);
+      background: linear-gradient(145deg, #2980b9, #3498db);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .message {
+      max-width: 100%;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      margin: 0 auto;
+    }
+
+    .message span {
+      opacity: 0;
+      display: inline-block;
+      animation: fadeInUp 0.6s ease-out forwards;
+      transform: translateY(10px);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .book {
+        width: 280px;
+        height: 380px;
+      }
+
+      .cover-title {
+        font-size: 1.4em;
+        letter-spacing: 2px;
+      }
+
+      .cover-icons {
+        font-size: 2em;
+      }
+
+      .page {
+        font-size: 1.05em;
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      body {
+        padding: 10px;
+      }
+    }
+
+    /* Subtle background animation */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(1deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="book" id="book">
+      <div class="cover">
+        <div class="cover-title">HI KITKAT 💙</div>
+        <div class="cover-icons">⭐🌙🎸🐰</div>
+      </div>
+      <div class="page">
+        <div class="message" id="message"></div>
+      </div>
+    </div>
+    <button class="btn" id="openBtn">Open the Book</button>
+  </div>
+
+  <script>
+    const book = document.getElementById('book');
+    const btn = document.getElementById('openBtn');
+    const message = document.getElementById('message');
+    const fullText = `I hope this message finds you well and that you'll appreciate this small effort of mine.
+
+Remember, you don't need to pressure yourself — doing your best is already enough.
+
+No matter what the result of this quarter is, someone is already proud of your hard work. 💖`;
+
+    let isOpen = false;
+
+    btn.addEventListener('click', () => {
+      isOpen = !isOpen;
+      
+      if (isOpen) {
+        book.classList.add('open');
+        btn.textContent = 'Close the Book';
+        
+        // Clear and type out the message
+        message.innerHTML = '';
+        let index = 0;
+        const typeInterval = setInterval(() => {
+          if (index < fullText.length) {
+            const span = document.createElement('span');
+            span.textContent = fullText[index];
+            span.style.animationDelay = `${index * 60}ms`;
+            message.appendChild(span);
+            index++;
+          } else {
+            clearInterval(typeInterval);
+          }
+        }, 60);
+      } else {
+        book.classList.remove('open');
+        btn.textContent = 'Open the Book';
+        message.innerHTML = '';
+      }
+    });
+  </script>
+</body>
+</html>
